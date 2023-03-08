@@ -1,9 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://bswp71hrqe6mk"]
+[gd_scene load_steps=5 format=3 uid="uid://bswp71hrqe6mk"]
 
 [ext_resource type="PackedScene" uid="uid://coalp2khxljnq" path="res://scenes/level.tscn" id="1_1bf1f"]
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1_t1gte"]
+[ext_resource type="PackedScene" uid="uid://c3464rjd3hxek" path="res://scenes/view_window.tscn" id="2_8qonj"]
 [ext_resource type="PackedScene" uid="uid://cr22ct048bbri" path="res://scenes/character.tscn" id="2_hgbp2"]
 
 [node name="Main" type="Node"]
+script = ExtResource("1_t1gte")
+main_camera = NodePath("Character/Camera2D")
+view_window = ExtResource("2_8qonj")
 
 [node name="Level" parent="." instance=ExtResource("1_1bf1f")]
 

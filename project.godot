@@ -24,6 +24,12 @@ BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
 
 window/size/viewport_width=1080
 window/size/viewport_height=720
+window/size/resizable=false
+window/size/borderless=true
+window/size/always_on_top=true
+window/size/transparent=true
+window/per_pixel_transparency/allowed=true
+window/subwindows/embed_subwindows=false
 
 [editor_plugins]
 
@@ -63,6 +69,11 @@ move_down={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":12,"pressure":0.0,"pressed":false,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_render/layer_1="World"
+2d_render/layer_2="Player"
 
 [rendering]
 

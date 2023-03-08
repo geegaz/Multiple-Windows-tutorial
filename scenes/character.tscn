@@ -74,9 +74,11 @@ graph_offset = Vector2(-59, -77)
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_wo16m"]
 
 [node name="Character" type="CharacterBody2D"]
+visibility_layer = 2
 script = ExtResource("1_ykho7")
 
 [node name="Sprite" type="Sprite2D" parent="."]
+visibility_layer = 2
 texture_filter = 1
 position = Vector2(0, -16)
 texture = ExtResource("2_af275")
