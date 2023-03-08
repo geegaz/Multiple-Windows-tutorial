@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://diw8c04tymtel"]
+
+[ext_resource type="Shader" path="res://assets/shaders/godrays.gdshader" id="1_ot0qy"]
+
+[resource]
+shader = ExtResource("1_ot0qy")
+shader_parameter/angle = -0.3
+shader_parameter/position = -0.2
+shader_parameter/spread = 1.0
+shader_parameter/cutoff = 0.1
+shader_parameter/falloff = 0.5
+shader_parameter/edge_fade = 0.15
+shader_parameter/speed = 1.0
+shader_parameter/ray1_density = 8.0
+shader_parameter/ray2_density = 30.0
+shader_parameter/ray2_intensity = 0.3
+shader_parameter/color = Color(1, 0.901961, 0.65098, 0.498039)
+shader_parameter/hdr = false
+shader_parameter/seed = 5.0

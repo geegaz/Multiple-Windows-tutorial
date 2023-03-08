@@ -1,0 +1,106 @@
+[gd_scene load_steps=22 format=3 uid="uid://cr22ct048bbri"]
+
+[ext_resource type="Script" path="res://scripts/Character.gd" id="1_ykho7"]
+[ext_resource type="Texture2D" uid="uid://b2tagd5wbxuwp" path="res://assets/sprites/player/player_animations-Sheet.png" id="2_af275"]
+[ext_resource type="Animation" uid="uid://bpxnpc1j8exa8" path="res://assets/animations/idle.res" id="3_3f77t"]
+[ext_resource type="Animation" uid="uid://ddr2vc2otoq43" path="res://assets/animations/run.res" id="4_umu45"]
+[ext_resource type="Animation" uid="uid://dewmb4akmyoun" path="res://assets/animations/jump.res" id="5_gcins"]
+[ext_resource type="Animation" uid="uid://dmbotjrurhu4x" path="res://assets/animations/fall.res" id="6_btns0"]
+[ext_resource type="Script" path="res://scripts/Movement Providers/MovementProviderPlayer.gd" id="7_xmyqj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c6p1b"]
+size = Vector2(10, 14)
+
+[sub_resource type="Animation" id="Animation_nljku"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tb28d"]
+_data = {
+"RESET": SubResource("Animation_nljku"),
+"fall": ExtResource("6_btns0"),
+"idle": ExtResource("3_3f77t"),
+"jump": ExtResource("5_gcins"),
+"run": ExtResource("4_umu45")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ks0ki"]
+animation = &"fall"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_e4ksn"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7msf8"]
+animation = &"jump"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gbjvk"]
+animation = &"run"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tnphg"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wrkyc"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4njjt"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0eq4b"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_e7ufj"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_enqmf"]
+states/End/position = Vector2(655, 100)
+states/fall/node = SubResource("AnimationNodeAnimation_ks0ki")
+states/fall/position = Vector2(356, 11)
+states/idle/node = SubResource("AnimationNodeAnimation_e4ksn")
+states/idle/position = Vector2(356, 100)
+states/jump/node = SubResource("AnimationNodeAnimation_7msf8")
+states/jump/position = Vector2(501, 11)
+states/run/node = SubResource("AnimationNodeAnimation_gbjvk")
+states/run/position = Vector2(501, 100)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_tnphg"), "jump", "fall", SubResource("AnimationNodeStateMachineTransition_wrkyc"), "fall", "idle", SubResource("AnimationNodeStateMachineTransition_4njjt"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_0eq4b"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_e7ufj")]
+graph_offset = Vector2(-59, -77)
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_wo16m"]
+
+[node name="Character" type="CharacterBody2D"]
+script = ExtResource("1_ykho7")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -16)
+texture = ExtResource("2_af275")
+hframes = 10
+vframes = 9
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_c6p1b")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tb28d")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_enqmf")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_wo16m")
+
+[node name="Movement Provider" type="Node" parent="."]
+script = ExtResource("7_xmyqj")
+action_left = "move_left"
+action_right = "move_right"
+action_jump = "move_up"
+character = NodePath("..")
