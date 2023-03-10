@@ -18,6 +18,11 @@
 
 This project is a demo of how Godot 4's multiple windows feature allows for interesting 4th-wall-breaking mechanics. It was created with Godot 4.0.
 
+### Controls:
+- **Arrows**: moves the character
+- **Space**: when focused on the character, spawns another window
+- **Escape**: when focused on the character, quits the demo
+
 ### Scenes:
 - **demo** is the scene created by following the tutorial step-by-step. Scripts are integrated to the scene and are not perfect, but functional
 - **main** is the default scene. Uses an improved version of the tutorial scripts
