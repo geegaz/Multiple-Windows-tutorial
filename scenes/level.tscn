@@ -1,10 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://coalp2khxljnq"]
+[gd_scene load_steps=6 format=3 uid="uid://bmud1eik4a6n"]
 
 [ext_resource type="TileSet" uid="uid://bsgkwdyqv7k7r" path="res://assets/tileset.tres" id="1_75tdv"]
 [ext_resource type="Material" uid="uid://diw8c04tymtel" path="res://assets/materials/godrays_mat.tres" id="2_6bfk0"]
 [ext_resource type="Texture2D" uid="uid://do5so6dmek5vo" path="res://assets/sprites/backgrounds/background_sky.png" id="2_vyrhy"]
-[ext_resource type="Texture2D" uid="uid://cqed6fa54m05y" path="res://assets/sprites/util/pixel.png" id="3_61m5w"]
 [ext_resource type="Texture2D" uid="uid://jkcjlctr83q8" path="res://assets/sprites/backgrounds/background_ground.png" id="4_xp5fk"]
+[ext_resource type="Texture2D" uid="uid://cqed6fa54m05y" path="res://assets/sprites/pixel.png" id="5_kksda"]
 
 [node name="Level" type="Node2D"]
 
@@ -48,4 +48,4 @@ layer_1/tile_data = PackedInt32Array(-786452, 262145, 0, -720916, 262145, 2, -65
 material = ExtResource("2_6bfk0")
 position = Vector2(24, -200)
 scale = Vector2(240, 400.25)
-texture = ExtResource("3_61m5w")
+texture = ExtResource("5_kksda")

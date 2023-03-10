@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cr22ct048bbri"]
+[gd_scene load_steps=22 format=3 uid="uid://cbpn4rtsqt00o"]
 
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_ykho7"]
 [ext_resource type="Texture2D" uid="uid://b2tagd5wbxuwp" path="res://assets/sprites/player/player_animations-Sheet.png" id="2_af275"]
@@ -6,7 +6,7 @@
 [ext_resource type="Animation" uid="uid://ddr2vc2otoq43" path="res://assets/animations/run.res" id="4_umu45"]
 [ext_resource type="Animation" uid="uid://dewmb4akmyoun" path="res://assets/animations/jump.res" id="5_gcins"]
 [ext_resource type="Animation" uid="uid://dmbotjrurhu4x" path="res://assets/animations/fall.res" id="6_btns0"]
-[ext_resource type="Script" path="res://scripts/Movement Providers/MovementProviderPlayer.gd" id="7_xmyqj"]
+[ext_resource type="Script" path="res://scripts/movement_providers/MovementProviderPlayer.gd" id="7_03k67"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c6p1b"]
 size = Vector2(10, 14)
@@ -101,7 +101,7 @@ active = true
 parameters/playback = SubResource("AnimationNodeStateMachinePlayback_wo16m")
 
 [node name="Movement Provider" type="Node" parent="."]
-script = ExtResource("7_xmyqj")
+script = ExtResource("7_03k67")
 action_left = "move_left"
 action_right = "move_right"
 action_jump = "move_up"

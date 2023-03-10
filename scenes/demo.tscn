@@ -1,0 +1,105 @@
+[gd_scene load_steps=5 format=3 uid="uid://k5l8vphedhi1"]
+
+[ext_resource type="PackedScene" uid="uid://coalp2khxljnq" path="res://scenes/level.tscn" id="1_4ufgg"]
+[ext_resource type="PackedScene" uid="uid://cbpn4rtsqt00o" path="res://scenes/character.tscn" id="2_8mypw"]
+
+[sub_resource type="GDScript" id="GDScript_23anm"]
+resource_name = "demo_main"
+script/source = "extends Node
+
+@onready var _MainWindow: Window = get_window()
+@onready var _SubWindow: Window = $Window
+
+@export var player_size: Vector2i = Vector2i(32, 32) # Should be the size of your character sprite, or slightly bigger
+
+@export_range(0, 19) var player_visibility_layer: int = 1
+@export_range(0, 19) var world_visibility_layer: int = 0
+
+@export_node_path(\"Camera2D\") var main_camera: NodePath
+@onready var _MainCamera: Camera2D = get_node(main_camera)
+
+func _ready():
+	# Enable per-pixel transparency, required for transparent windows but has a performance cost
+	# Can also break on some systems
+	ProjectSettings.set_setting(\"display/window/per_pixel_transparency/allowed\", true)
+	# Set the window settings - most of them can be set in the project settings
+	_MainWindow.borderless = true		# Hide the edges of the window
+	_MainWindow.unresizable = true		# Prevent resizing the window
+	_MainWindow.always_on_top = true	# Force the window always be on top of the screen
+	_MainWindow.gui_embed_subwindows = false # Make subwindows actual system windows <- VERY IMPORTANT
+	_MainWindow.transparent = true		# Allow the window to be transparent
+	# Settings that cannot be set in project settings
+	_MainWindow.transparent_bg = true	# Make the window's background transparent
+
+	# The window's size may need to be smaller than the default minimum size
+	# so we have to change the minimum size BEFORE setting the window's size
+	_MainWindow.min_size = player_size * Vector2i(_MainCamera.zoom)
+	_MainWindow.size = _MainWindow.min_size
+	
+	# To only see the character in the main window, we need to 
+	# move its sprite on a separate visibility layer from the world
+	# and set the main window to cull (not show) the world's visibility layer
+	_MainWindow.set_canvas_cull_mask_bit(player_visibility_layer, true)
+	_MainWindow.set_canvas_cull_mask_bit(world_visibility_layer, false)
+
+	# Contrarily to the main window, hide the player and show the world
+	_SubWindow.set_canvas_cull_mask_bit(player_visibility_layer, false)
+	_SubWindow.set_canvas_cull_mask_bit(world_visibility_layer, true)
+	
+	_SubWindow.world_2d = _MainWindow.world_2d
+
+func _process(delta):
+	# Update the main window's position
+	_MainWindow.position = get_window_pos_from_camera()
+
+func get_window_pos_from_camera()->Vector2i:
+	return (Vector2i(_MainCamera.global_position + _MainCamera.offset) - player_size / 2) * Vector2i(_MainCamera.zoom)
+"
+
+[sub_resource type="GDScript" id="GDScript_lufjp"]
+resource_name = "demo_window"
+script/source = "extends Window
+
+@onready var _Camera: Camera2D = $Camera2D
+
+var last_position: = Vector2i.ZERO
+var velocity: = Vector2i.ZERO
+
+func _ready() -> void:
+	# Set the anchor mode to \"Fixed top-left\"
+	# Easier to work with since it corresponds to the window coordinates
+	_Camera.anchor_mode = Camera2D.ANCHOR_MODE_FIXED_TOP_LEFT
+	
+	transient = true # Make the window considered as a child of the main window
+	close_requested.connect(queue_free) # Actually close the window when clicking the close button
+
+func _process(delta: float) -> void:
+	velocity = position - last_position
+	last_position = position
+	_Camera.position = get_camera_pos_from_window()
+	
+func get_camera_pos_from_window()->Vector2i:
+	return (position + velocity) / Vector2i(_Camera.zoom)
+"
+
+[node name="Main" type="Node"]
+script = SubResource("GDScript_23anm")
+main_camera = NodePath("Character/Camera2D")
+
+[node name="Level" parent="." instance=ExtResource("1_4ufgg")]
+position = Vector2(448, 400)
+
+[node name="Character" parent="." instance=ExtResource("2_8mypw")]
+position = Vector2(448, 320)
+
+[node name="Camera2D" type="Camera2D" parent="Character"]
+offset = Vector2(0, -16)
+zoom = Vector2(3, 3)
+
+[node name="Window" type="Window" parent="."]
+initial_position = 1
+size = Vector2i(256, 256)
+script = SubResource("GDScript_lufjp")
+
+[node name="Camera2D" type="Camera2D" parent="Window"]
+zoom = Vector2(3, 3)
