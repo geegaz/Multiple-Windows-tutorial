@@ -49,7 +49,7 @@ So, a while ago I posted [a tweet about using multiple windows](https://twitter.
 
 So I'm making this tutorial since many of you seemed to enjoy it ! Here is the basic idea: 
 
-> The character is a separate unresizeable, borderless and transparent that's exactly the size of the character's sprite. Additional windows that are instanciated have their own cameras, and copy the main window's world_2d to see the same world. The character manipulates the main window's position to seem like they're moving around on the screen, and the additional windows move their camera in the world to match the window's position on the screen.
+> The character is a separate unresizeable, borderless and transparent window that's exactly the size of the character's sprite. Additional windows that are instanciated have their own camera, and copy the main window's world_2d to see the same world. The character manipulates the main window's position to seem like they're moving around on the screen, and the additional windows move their camera in the world to match the window's position on the screen.
 
 The tutorial will be divided in 3 parts:
 1. **How to use the new Window node**
@@ -62,15 +62,13 @@ Now with all that in mind, let's start !
 
 ## Part 1 - Using Godot 4's Window
 
-Godot 4 introduces a new kind of node, **Window**, which replaces Godot 3's Popup node. This new node is much more powerful, as it can be either embeded in the main window as a regular Control node but can also be an entirely separate window ! 
+Godot 4 introduces a new kind of node, **Window**, which replaces Godot 3's Popup node. This new node is much more powerful, as it can be either embeded in the main window as a regular Control but can also be an entirely separate window ! 
 
-Window also inherits from Viewport, which means Windows are actually viewports and can use all the properties and methods from Viewport nodes. In fact, that's actually what we're going to do to display the same world in multiple windows.
+Window also inherits from Viewport, which means Windows are actually viewports and can use all the properties and methods from Viewport nodes. In fact, that's actually what we're going to use to display the same world in multiple windows.
 
 Here is what the main parameters for the Window look like in the inspector.
 
-![Some of the Window's node properties. 
-Visit the Godot wiki that's linked in the next paragraph for the complete list of properties (and better screen-reader support)
-](https://user-images.githubusercontent.com/39198556/224128483-5ade9306-d860-4258-8988-cfec89797a25.png)
+![Some of the Window's node properties. Visit the Godot wiki that's linked in the next paragraph for the complete list of properties (and better screen-reader support)](https://user-images.githubusercontent.com/39198556/224128483-5ade9306-d860-4258-8988-cfec89797a25.png)
 
 If you've already tweaked the projects setting a lot in Godot, some of the flags might seem familiar. A lot of them are in common with the project's Window settings, along with some ones that only make sense for additional window. Of course, this is not the complete list of the Window's properties - you can find all of them [on the Godot wiki](https://docs.godotengine.org/en/stable/classes/class_window.html) !
 
@@ -81,7 +79,7 @@ Here are the flags we're going to use, and what they do:
 - **always_on_top**: this window stays on top of others even when focusing another one
 - **transparent**:   *allows* this window to be transparent - other settings need to be set to make it actually transparent
 
-But when you create a Window node, you might notice it appears by default as a Control node, embeded in the main window. 
+But when you create a Window node and test your project, you might notice it appears by default as a Control node, embeded in the main window. 
 To fix that, go in the **Project Settings** > **Window** > switch to **Advanced Settings** > disable **Embed Subwindows**
 
 ![Godot's Project Settings, in the Window section. Advanced Settings are enabled and the option Embed Subwindows has been unchecked](https://user-images.githubusercontent.com/39198556/224145376-35ee13ea-7b91-459a-9c1b-e105123789d4.png)
@@ -105,8 +103,7 @@ func _process(delta: float) -> void:
 ```
 ![Hierarchy view of a scene in Godot 4. The root is a basic node with a script attached and a Camera2D as a child](https://user-images.githubusercontent.com/39198556/224136796-4b099cbd-c98e-466f-92e0-fc98978ba87a.png)
 
-Attach this script to a node in your scene, and add a Camera2D to this node. The camera will follow the window's position on the screen, although with a slight delay. This is due to the window's position updating before the `_process()` method is called in the engine, making the camera flicker and lag behind. I haven't found a fix, and only mitigate the issue by taking the velocity of the window since the last frame and adding it to the camera's position.
-
+Attach this script to a node in your scene, and add a Camera2D to this node. The camera will follow the window's position on the screen, although with a slight delay. This is due to the window's position updating before the `_process()` method is called in the engine, making the camera flicker and lag behind.
 
 ### Camera in a separate window
 
@@ -137,12 +134,12 @@ func get_camera_pos_from_window()->Vector2i:
 ```
 ![Hierarchy view of a scene in Godot 4. The root is a basic node, it has a Sprite2D and a Window as children. The Window has a script attached and a Camera 2D as a child](https://user-images.githubusercontent.com/39198556/224141011-5de5b114-3745-4a5f-987b-31eac9c9bd3b.png)
 
-Here, there's a little more going on: this time we're using a separate window, which means we can access its position directly. I also added the window's velocity from the last frame to the camera's position to mitigate the view lagging behind. There's still flickering, but the view follows more closely the actual position of the window
+Here, there's a little more going on: this time we're using a separate window, which means we can access its position directly. I also added the window's velocity from the last frame to the camera's position to mitigate the view lagging behind. There's still flickering, but the view follows more closely the actual position of the window.
 
 
 ### Sharing the same world
 
-But now you might start to notice the issue with what we're trying to do. I put a sprite in the main node of the scene, but it doesn't appear in the additional window even when moving the window to the top-left of the screen where the sprite should be. Now that's the regular way windows would work - but not ours ! Our goal is to have the world the character is moving in shown simultaneously on several windows.
+But now you might start to notice the issue with what we're trying to do. I put a sprite on the main node of the scene, but it doesn't appear in the additional window even when moving the window to the top-left of the screen where the sprite should be. Now that's the regular way windows would work - but not ours ! Our goal is to have the world the character is moving in shown simultaneously on several windows.
 
 For this, we'll need an additional script on the main node, at the root of the scene:
 
@@ -198,7 +195,7 @@ func _ready():
 
 So, what is happening there? 
 
-First, we activate **per-pixel transparency**, which is the actual setting that allows windows to show the background of the desktop when they're transparent. 
+First, we activate **per-pixel transparency** in the project settings, which is the actual setting that allows windows to show the background of the desktop when they're transparent. 
 
 Next, we set a bunch of flags to make the window **borderless, unresizeable and always on top**, which will make it completely unmoveable using the mouse. We also disable the window embeding subwindows, since we want other windows to display outside of it.
 
