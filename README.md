@@ -157,7 +157,7 @@ func _ready():
 
 ...And that's pretty much it !
 
-Now when you move the subwindow to the top-left corner of your screen, you should see a part of the sprite ! At this point, I'd recommend you make the Window and Camera2D a separate scene, to be able to reuse it more easily or instanciate it at runtime.
+Now when you move the subwindow to the top-left corner of your screen, you should see a part of the sprite ! At this point, I'd recommend you make the Window and Camera2D a separate scene, to be able to reuse it more easily or instantiate it at runtime.
 
 And now, the most important (and longest) part:
 
