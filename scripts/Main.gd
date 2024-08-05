@@ -27,18 +27,18 @@ func _ready():
 	_MainWindow.transparent = true		# Allow the window to be transparent
 	# Settings that cannot be set in project settings
 	_MainWindow.transparent_bg = true	# Make the window's background transparent
-	
+
 	# The window's size may need to be smaller than the default minimum size
 	# so we have to change the minimum size BEFORE setting the window's size
 	_MainWindow.min_size = player_size * Vector2i(_MainCamera.zoom)
 	_MainWindow.size = _MainWindow.min_size
-	# To only see the character in the main window, we need to 
+	# To only see the character in the main window, we need to
 	# move its sprite on a separate visibility layer from the world
 	# and set the main window to cull (not show) the world's visibility layer
 	_MainWindow.set_canvas_cull_mask_bit(player_visibility_layer, true)
 	_MainWindow.set_canvas_cull_mask_bit(world_visibility_layer, false)
 	# -------------------------------------------
-	
+
 	# Position the world at the bottom-center of the screen
 	world_offset = Vector2i(_MainScreenRect.size.x / 2, _MainScreenRect.size.y)
 
@@ -49,7 +49,7 @@ func _process(delta):
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		create_view_window()
-	
+
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
 

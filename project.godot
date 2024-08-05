@@ -13,7 +13,7 @@ config_version=5
 config/name="Multiple Windows tutorial"
 config/description="Enter an interesting project description here!"
 run/main_scene="res://scenes/main.tscn"
-config/features=PackedStringArray("4.0")
+config/features=PackedStringArray("4.2")
 config/icon="res://icon.png"
 
 [autoload]
@@ -24,8 +24,9 @@ BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
 
 window/size/viewport_width=1080
 window/size/viewport_height=720
-window/per_pixel_transparency/allowed=true
+window/size/transparent=true
 window/subwindows/embed_subwindows=false
+window/per_pixel_transparency/allowed=true
 
 [editor_plugins]
 
@@ -74,3 +75,4 @@ move_down={
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
+viewport/transparent_background=true
