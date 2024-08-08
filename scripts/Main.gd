@@ -13,17 +13,20 @@ var world_offset: = Vector2i.ZERO
 @onready var _MainScreen: int = _MainWindow.current_screen
 @onready var _MainScreenRect: Rect2i = DisplayServer.screen_get_usable_rect(_MainScreen)
 
-
 func _ready():
 	# ------------ MAIN WINDOW SETUP ------------
 	# Enable per-pixel transparency, required for transparent windows but has a performance cost
 	# Can also break on some systems
 	ProjectSettings.set_setting("display/window/per_pixel_transparency/allowed", true)
+
+
 	# Set the window settings - most of them can be set in the project settings
 	_MainWindow.borderless = true		# Hide the edges of the window
 	_MainWindow.unresizable = true		# Prevent resizing the window
 	_MainWindow.always_on_top = true	# Force the window always be on top of the screen
 	_MainWindow.gui_embed_subwindows = false # Make subwindows actual system windows <- VERY IMPORTANT
+	# display->window->transparent have to be set as true in project setting, in IDE´s Menu "Project->Project Settings...",
+	#otherwise _MainWindow.transparent dont affect de player´s sprite (tested in Godot 4.2.2)
 	_MainWindow.transparent = true		# Allow the window to be transparent
 	# Settings that cannot be set in project settings
 	_MainWindow.transparent_bg = true	# Make the window's background transparent
