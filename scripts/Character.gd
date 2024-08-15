@@ -35,7 +35,7 @@ func _process(_delta):
 		_Sprite.flip_h = true
 	elif target_speed > 0.0:
 		_Sprite.flip_h = false
-	
+
 	# Animation states
 	if on_ground:
 		if target_speed != 0.0:
@@ -49,7 +49,7 @@ func _process(_delta):
 func _physics_process(delta):
 	# Get horizontal movement direction
 	# Direction is provided by a Movement Provider -> either a Player or IA
-	
+
 	# Vertical movement
 	if velocity.y > 0 or (not jump and jump_time < jump_buffer):
 		target_gravity = gravity_strong
@@ -58,11 +58,11 @@ func _physics_process(delta):
 	target_speed = dir * max_speed
 	target_accel = acceleration if dir and sign(dir) == sign(velocity.x) else deceleration
 	velocity.x = move_toward(velocity.x, target_speed, target_accel * delta)
-	
+
 	# Apply velocity
 	var collision = move_and_slide()
 	var landed = is_on_floor() and not on_ground
-	
+
 	# Update buffers
 	if jump:
 		jump_time = 0.0 # Reset jump time
@@ -72,7 +72,7 @@ func _physics_process(delta):
 	else:
 		air_time = min(air_time + delta, air_buffer)
 		jump_time = min(jump_time + delta, jump_buffer)
-	
+
 	# Apply jump / landing
 	if jump_time < jump_buffer and air_time < air_buffer:
 		do_jump()
@@ -83,12 +83,12 @@ func do_jump()->void:
 	# Movement variables
 	velocity.y = -sqrt(jump_height * 2.0 * gravity)
 	target_gravity = gravity
-	
+
 	# Status variables
 	jump_time = jump_buffer
 	air_time = air_buffer
 	on_ground = false
-	
+
 	# Animation and effects
 	_StateMachine.travel("jump")
 
