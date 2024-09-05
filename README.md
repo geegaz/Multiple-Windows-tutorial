@@ -4,19 +4,19 @@
 - [Introduction](#introduction)
 - [Part 1 - Using Godot 4's Window](#part-1---using-godot-4s-window)
 - [Part 2 - Making windows share the same world](#part-2---making-windows-share-the-same-world)
-    - [Camera following a window's position](#camera-following-a-windows-position)
-    - [Camera in a separate window](#camera-in-a-separate-window)
-    - [Sharing the same world](#sharing-the-same-world)
+	- [Camera following a window's position](#camera-following-a-windows-position)
+	- [Camera in a separate window](#camera-in-a-separate-window)
+	- [Sharing the same world](#sharing-the-same-world)
 - [Part 3 - Making a character that moves across windows](#part-3---making-a-character-that-moves-across-windows)
-    - [Making the main window (almost) invisible](#making-the-main-window-almost-invisible)
-    - [Hiding the world in the main window](#hiding-the-world-in-the-main-window)
+	- [Making the main window (almost) invisible](#making-the-main-window-almost-invisible)
+	- [Hiding the world in the main window](#hiding-the-world-in-the-main-window)
 	- [Moving the window with the character](#moving-the-window-with-the-character)
 - [Limitations](#limitations)
 - [Conclusions](#conclusion)
 
 ## Contents of this Repository
 
-This project is a demo of how Godot 4's multiple windows feature allows for interesting 4th-wall-breaking mechanics. It was created with Godot 4.3.
+This project is a demo of how Godot 4's multiple windows feature allows for interesting 4th-wall-breaking mechanics. It was created with Godot 4.0 and updated to Godot 4.3 by [@wadantasjr](https://github.com/wadantasjr).
 
 ### Controls:
 - **Arrows**: moves the character
@@ -43,7 +43,7 @@ The project also uses Portponky's excellent plugin **Better Terrain** for Godot 
 ---
 
 ## Introduction
-So, a while ago I posted [a tweet about using multiple windows](https://twitter.com/geegaz_/status/1632419279843803138) in the Godot 4.3 release. Here's what it looked like:
+So, a while ago I posted [a tweet about using multiple windows](https://twitter.com/geegaz_/status/1632419279843803138) with the Godot 4.0 release. Here's what it looked like:
 
 ![A character jumping between different windows](media/jumping_through_windows.gif)
 
@@ -188,8 +188,8 @@ func _ready():
 	_MainWindow.transparent = true		# Allow the window to be transparent
 	# Settings that cannot be set in project settings
 	_MainWindow.transparent_bg = true	# Make the window's background transparent
-    
-    # set the subwindow's world...
+	
+	# set the subwindow's world...
 
 ```
 
@@ -216,14 +216,14 @@ After placing the camera as a child of the character, here a small snippet to se
 @export var player_size: Vector2i = Vector2i(32, 32) # Should be the size of your character sprite, or slightly bigger
 
 func _ready():
-    # setup the main window...
+	# setup the main window...
 
-    # The window's size may need to be smaller than the default minimum size
+	# The window's size may need to be smaller than the default minimum size
 	# so we have to change the minimum size BEFORE setting the window's size
 	_MainWindow.min_size = player_size
 	_MainWindow.size = _MainWindow.min_size
 
-    # set the subwindow's world...
+	# set the subwindow's world...
 ```
 ![Hierarchy view of a scene in Godot 4. The root is still a basic node with a script attached. It still has a Window as a child, but now also a Node2D "Level" and a CharacterBody "Character" as children. The Window has a script attached and a Camera 2D as a child](https://user-images.githubusercontent.com/39198556/224170623-14c584b4-accc-4221-9b5f-1279f9876d63.png)
 
@@ -245,7 +245,7 @@ Then, we can add these lines to the `Main.gd`:
 @export_range(0, 19) var world_visibility_layer: int = 0
 
 func _ready():
-    # setup the main window...
+	# setup the main window...
 	# fit the main window to the character...
 
 	# To only see the character in the main window, we need to 
@@ -258,7 +258,7 @@ func _ready():
 	_SubWindow.set_canvas_cull_mask_bit(player_visibility_layer, false)
 	_SubWindow.set_canvas_cull_mask_bit(world_visibility_layer, true)
 
-    # set the subwindow's world...
+	# set the subwindow's world...
 ```
 
 ### Moving the window with the character

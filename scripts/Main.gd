@@ -25,8 +25,8 @@ func _ready():
 	_MainWindow.unresizable = true		# Prevent resizing the window
 	_MainWindow.always_on_top = true	# Force the window always be on top of the screen
 	_MainWindow.gui_embed_subwindows = false # Make subwindows actual system windows <- VERY IMPORTANT
-	# display->window->transparent have to be set as true in project setting, in IDE´s Menu "Project->Project Settings...",
-	#otherwise _MainWindow.transparent dont affect de player´s sprite (tested in Godot 4.2.2)
+	# display->window->transparent has to be set to true in the project setting, in IDE´s Menu "Project->Project Settings...",
+	# Otherwise _MainWindow.transparent doesn't affect the player´s sprite (tested in Godot 4.2.2)
 	_MainWindow.transparent = true		# Allow the window to be transparent
 	# Settings that cannot be set in project settings
 	_MainWindow.transparent_bg = true	# Make the window's background transparent
