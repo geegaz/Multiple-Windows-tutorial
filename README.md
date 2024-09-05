@@ -1,4 +1,4 @@
-# Multiple Windows tutorial for Godot 4.0
+# Multiple Windows tutorial for Godot 4.3
 
 - [Contents of this Repository](#contents-of-this-repository)
 - [Introduction](#introduction)
@@ -16,7 +16,7 @@
 
 ## Contents of this Repository
 
-This project is a demo of how Godot 4's multiple windows feature allows for interesting 4th-wall-breaking mechanics. It was created with Godot 4.0.
+This project is a demo of how Godot 4's multiple windows feature allows for interesting 4th-wall-breaking mechanics. It was created with Godot 4.3.
 
 ### Controls:
 - **Arrows**: moves the character
@@ -38,12 +38,12 @@ This project is a demo of how Godot 4's multiple windows feature allows for inte
 - **MovementProviderPlayer.gd** extends `MovementProvider` for player inputs
 
 *This project uses sprites from my game **A Key(s) Path**, which is open-source on [GitHub](https://github.com/geegaz/A-Key-s-Path) and available on [Itch](https://geegaz.itch.io/out-of-controls).<br>
-The project also uses Portponky's excellent plugin **Better Terrain** for Godot 4.0, check it out on [Github](https://github.com/Portponky/better-terrain) !*
+The project also uses Portponky's excellent plugin **Better Terrain** for Godot 4.3, check it out on [Github](https://github.com/Portponky/better-terrain) !*
 
 ---
 
 ## Introduction
-So, a while ago I posted [a tweet about using multiple windows](https://twitter.com/geegaz_/status/1632419279843803138) in the Godot 4.0 release. Here's what it looked like:
+So, a while ago I posted [a tweet about using multiple windows](https://twitter.com/geegaz_/status/1632419279843803138) in the Godot 4.3 release. Here's what it looked like:
 
 ![A character jumping between different windows](media/jumping_through_windows.gif)
 

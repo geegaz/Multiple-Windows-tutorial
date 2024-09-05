@@ -8,6 +8,8 @@
 [ext_resource type="Animation" uid="uid://dmbotjrurhu4x" path="res://assets/animations/fall.res" id="6_btns0"]
 [ext_resource type="Script" path="res://scripts/movement_providers/MovementProviderPlayer.gd" id="7_03k67"]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_w5js0"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c6p1b"]
 size = Vector2(10, 14)
 
@@ -71,8 +73,6 @@ states/run/position = Vector2(501, 100)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_tnphg"), "jump", "fall", SubResource("AnimationNodeStateMachineTransition_wrkyc"), "fall", "idle", SubResource("AnimationNodeStateMachineTransition_4njjt"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_0eq4b"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_e7ufj")]
 graph_offset = Vector2(-59, -77)
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_wo16m"]
-
 [node name="Character" type="CharacterBody2D"]
 visibility_layer = 2
 script = ExtResource("1_ykho7")
@@ -80,6 +80,7 @@ script = ExtResource("1_ykho7")
 [node name="Sprite" type="Sprite2D" parent="."]
 visibility_layer = 2
 texture_filter = 1
+material = SubResource("CanvasItemMaterial_w5js0")
 position = Vector2(0, -16)
 texture = ExtResource("2_af275")
 hframes = 10
@@ -97,8 +98,6 @@ libraries = {
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_enqmf")
 anim_player = NodePath("../AnimationPlayer")
-active = true
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_wo16m")
 
 [node name="Movement Provider" type="Node" parent="."]
 script = ExtResource("7_03k67")

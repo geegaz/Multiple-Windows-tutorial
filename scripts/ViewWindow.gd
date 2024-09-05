@@ -11,7 +11,7 @@ func _ready() -> void:
 	# Set the anchor mode to "Fixed top-left"
 	# Easier to work with since it corresponds to the window coordinates
 	_Camera.anchor_mode = Camera2D.ANCHOR_MODE_FIXED_TOP_LEFT
-	
+
 	transient = true # Make the window considered as a child of the main window
 	close_requested.connect(queue_free) # Actually close the window when clicking the close button
 
